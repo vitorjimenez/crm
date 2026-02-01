@@ -1,5 +1,6 @@
 package com.gotech.sboot_crm.model;
 
+import com.gotech.sboot_crm.service.type.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "orcamento")
@@ -21,9 +23,9 @@ public class Orcamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nomeOrcamento;
-    private String criadoPor;
-    private ItensOrcamento itensOrcamento;
-    private String statusOrcamento;
+    private Usuario criadoPor;
+    private List<Item> itens;
+    private Status statusOrcamento;
     private Double preco;
     private Date createdDate;
 }

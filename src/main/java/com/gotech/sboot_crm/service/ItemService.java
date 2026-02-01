@@ -1,21 +1,19 @@
 package com.gotech.sboot_crm.service;
 
-import com.gotech.sboot_crm.model.Cliente;
-import com.gotech.sboot_crm.model.Estoque;
-import com.gotech.sboot_crm.repository.EstoqueRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gotech.sboot_crm.model.Item;
+import com.gotech.sboot_crm.repository.ItemRepository;
 import org.springframework.web.bind.annotation.RequestBody;
 
-public class EstoqueService {
+public class ItemService {
 
-    private final EstoqueRepository repository;
-    public EstoqueService (EstoqueRepository repo){
+    private final ItemRepository repository;
+    public ItemService(ItemRepository repo){
         this.repository = repo;
     }
 
-    public void inserirItem (@RequestBody Estoque estoque){
+    public void inserirItem (@RequestBody Item item){
         try {
-            repository.save(estoque);
+            repository.save(item);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
@@ -25,9 +23,9 @@ public class EstoqueService {
         //TODO - Handlle logic
     }
 
-    public void desativarItem(@RequestBody Estoque item){
+    public void desativarItem(@RequestBody Item item){
         try {
-            Estoque toChange = repository.findById(item);
+            Item toChange = repository.findById(item);
             toChange.setAtivo(false);
             repository.save(toChange);
         } catch (RuntimeException e) {
