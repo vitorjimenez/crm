@@ -4,6 +4,8 @@ import com.gotech.sboot_crm.model.Item;
 import com.gotech.sboot_crm.repository.ItemRepository;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 public class ItemService {
 
     private final ItemRepository repository;
@@ -11,16 +13,23 @@ public class ItemService {
         this.repository = repo;
     }
 
-    public void inserirItem (@RequestBody Item item){
+    public void saveItems(List<Item> itemList) {
         try {
-            repository.save(item);
-        } catch (RuntimeException e) {
+            for (Item item : itemList) {
+                item.setAtivo(true);
+                repository.save(item);
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void alterarItem(){
-        //TODO - Handlle logic
+    public void alterarItem(Item payload){
+        try {
+            repository.save(payload);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void desativarItem(@RequestBody Item item){

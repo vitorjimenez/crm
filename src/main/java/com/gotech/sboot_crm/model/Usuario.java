@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,5 +27,6 @@ public class Usuario implements Serializable {
     private String telefone;
     private String cargo;
     private boolean ativo;
+    @CreationTimestamp
     private Date createdDate;
 }
