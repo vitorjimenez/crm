@@ -2,6 +2,7 @@ package com.gotech.sboot_crm.service;
 
 import com.gotech.sboot_crm.model.Cliente;
 import com.gotech.sboot_crm.repository.ClienteRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +11,7 @@ import java.sql.SQLOutput;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ClienteService {
 
     private final ClienteRepository repository;
@@ -18,12 +20,15 @@ public class ClienteService {
         this.repository = clienteRepository;
     }
 
-    public void encontrarCliente(Long id) {
+    public String encontrarCliente(Long id) {
+        Optional<Cliente> cliente = Optional.of(new Cliente());
         try {
-            System.out.println(repository.findById(id));
+            cliente = repository.findById(id);
         } catch (Exception e) {
+//            log.error("Erro ao encontrar cliente: " + e.getMessage());
             System.out.println(e.getMessage());
         }
+        return cliente.toString();
     }
 
     public void cadastrarCliente(Cliente cliente) {

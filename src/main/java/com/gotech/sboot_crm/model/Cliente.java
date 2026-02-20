@@ -1,10 +1,7 @@
 package com.gotech.sboot_crm.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
@@ -12,8 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "cliente")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cliente implements Serializable {

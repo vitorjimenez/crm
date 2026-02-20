@@ -2,10 +2,7 @@ package com.gotech.sboot_crm.model;
 
 import com.gotech.sboot_crm.service.type.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,8 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "orcamento")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Orcamento implements Serializable {
