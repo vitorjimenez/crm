@@ -2,7 +2,6 @@ package com.gotech.sboot_crm.service;
 
 import com.gotech.sboot_crm.model.Item;
 import com.gotech.sboot_crm.repository.ItemRepository;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -10,6 +9,7 @@ public class ItemService {
 
     private final ItemRepository repository;
     private String response;
+
     public ItemService(ItemRepository repo){
         this.repository = repo;
     }
@@ -23,32 +23,46 @@ public class ItemService {
             response = (itemList.size() == 1)  ? "Item salvo com sucesso" : "Itens salvos com sucesso";
         } catch (Exception e) {
             response = e.getMessage();
+            response = (itemList.size() == 1) ? "Item salvo com sucesso" : "Itens salvos com sucesso.";
         }
         return response;
     }
 
-    public void alterarItem(Item payload){
+    public String alterarItem(Item payload){
+        Item toChange = repository.findById(payload);
         try {
-            repository.save(payload);
+            toChange.setPreco(payload.getPreco());
+            toChange.setName(payload.getName());
+            toChange.setQuantidade(payload.getQuantidade());
+            repository.save(toChange);
+            response = "Item alterado com sucesso";
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            response = e.getMessage();
         }
+        return response;
     }
 
-    public void desativarItem(Item item){
+    public String desativarItem(Item item){
+        if(!item.isValid(item)) return response = "Algo inesperado aconteceu.";
         try {
             Item toChange = repository.findById(item);
             toChange.setAtivo(false);
             repository.save(toChange);
+            response = "Sucesso ao desativar item.";
         } catch (RuntimeException e) {
-            System.out.println("Erro ao desativar item: " + e.getMessage());
+            response = "Erro ao desativar item: " + e.getMessage();
         }
+        return response;
     }
 
     public String excluirItem(Item item) {
         try {
-
+            repository.delete(item);
+            response = "Item excluido com sucesso.";
+        } catch (Exception e) {
+            response = "Houve uma falha em excluir o item. Mensagem de erro: " + e.getMessage();
         }
+        return response;
     }
 
 }

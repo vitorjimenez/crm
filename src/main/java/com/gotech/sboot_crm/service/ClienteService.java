@@ -2,12 +2,8 @@ package com.gotech.sboot_crm.service;
 
 import com.gotech.sboot_crm.model.Cliente;
 import com.gotech.sboot_crm.repository.ClienteRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.sql.SQLOutput;
 import java.util.Optional;
 
 @Service
@@ -37,6 +33,7 @@ public class ClienteService {
     }
 
     public String cadastrarCliente(Cliente cliente) {
+        if(!cliente.isValid(cliente)) return response = "Formulario invalido";
         try {
             response = "Sucesso ao cadastrar o cliente: " + cliente.getNome();
             repository.save(cliente);
@@ -47,6 +44,7 @@ public class ClienteService {
     }
 
     public String alterarCliente(Cliente cliente){
+        if(!cliente.isValid(cliente)) return response = "Formulario invalido.";
         try {
             response = "Sucesso ao alterar cliente: " + cliente.getNome();
             repository.save(cliente);
@@ -57,7 +55,8 @@ public class ClienteService {
     }
 
     public String desativarCliente(Cliente payload) {
-        if (payload == null) {return "Falha ao desativar cliente";}
+        if (!payload.isValid(payload)) {return response = "Falha ao desativar cliente";}
+        String response = "";
         Cliente cliente = repository.findById(payload);
         try {
             cliente.setAtivo(false);
