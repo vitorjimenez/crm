@@ -11,7 +11,6 @@ import java.sql.SQLOutput;
 import java.util.Optional;
 
 @Service
-@Slf4j
 public class ClienteService {
 
     private final ClienteRepository repository;
@@ -21,39 +20,56 @@ public class ClienteService {
     }
 
     public String encontrarCliente(Long id) {
-        Optional<Cliente> cliente = Optional.of(new Cliente());
+        String response;
+        if(id == null || id.toString().equals("")) {return "O ID não pode ser nulo.";}
         try {
-            cliente = repository.findById(id);
+            Optional<Cliente> cliente = repository.findById(id);
+            if(cliente.isEmpty()) {
+                response = "Cliente não encontrado.";
+            } else {
+                response = cliente.get().toString();
+            }
         } catch (Exception e) {
-//            log.error("Erro ao encontrar cliente: " + e.getMessage());
+            response = "Falha ao encontrar cliente.";
             System.out.println(e.getMessage());
         }
-        return cliente.toString();
+        return response;
     }
 
-    public void cadastrarCliente(Cliente cliente) {
+    public String cadastrarCliente(Cliente cliente) {
+        String response = "";
         try {
+            response = "Sucesso ao cadastrar o cliente: " + cliente.getNome();
             repository.save(cliente);
         } catch (RuntimeException e) {
             System.out.println("Erro ao cadastrar cliente: " + e.getMessage());
         }
+        return response;
     }
 
-    public void alterarCliente(Cliente cliente){
+    public String alterarCliente(Cliente cliente){
+        String response = "";
         try {
+            response = "Sucesso ao alterar cliente: " + cliente.getNome();
             repository.save(cliente);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            response = "Falha ao alterar cliente: " + e.getMessage();
         }
+        return response;
     }
 
-    public void desativarCliente(Cliente cliente){
+    public String desativarCliente(Cliente payload) {
+        if (payload == null) {return "Falha ao desativar cliente";}
+        String response = "";
+        Cliente cliente = repository.findById(payload);
         try {
-            Cliente toChange = repository.findById(cliente);
-            toChange.setAtivo(false);
-            repository.save(toChange);
-        } catch (RuntimeException e) {
-            System.out.println("Erro ao desativar cliente: " + e.getMessage());
+            cliente.setAtivo(false);
+            repository.save(cliente);
+            response = "Sucesso ao desativar cliente";
+        } catch (Exception e) {
+            response = "Erro ao encontrar cliente: " + e.getMessage();
+            System.out.println(e.getMessage());
         }
+        return response;
     }
 }

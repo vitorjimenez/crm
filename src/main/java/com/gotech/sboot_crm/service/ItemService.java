@@ -32,13 +32,19 @@ public class ItemService {
         }
     }
 
-    public void desativarItem(@RequestBody Item item){
+    public void desativarItem(Item item){
         try {
             Item toChange = repository.findById(item);
             toChange.setAtivo(false);
             repository.save(toChange);
         } catch (RuntimeException e) {
             System.out.println("Erro ao desativar item: " + e.getMessage());
+        }
+    }
+
+    public void excluirItem(Item item) {
+        try {
+
         }
     }
 

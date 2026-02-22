@@ -20,22 +20,12 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<String> getCliente (@PathVariable Long id){
-        try {
-            service.encontrarCliente(id);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(service.encontrarCliente(id));
     }
 
     @PostMapping(value = "/cadastrar")
     public ResponseEntity<String> cadastrarCliente(@RequestBody Cliente cliente) {
-        try {
-            service.cadastrarCliente(cliente);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return ResponseEntity.ok().body("Cliente salvo com sucesso: " + cliente.getNome() + " status: " + cliente.isAtivo());
+        return ResponseEntity.ok().body(service.cadastrarCliente(cliente));
     }
 
     @PutMapping(value = "/alterar")
