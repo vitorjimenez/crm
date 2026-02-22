@@ -9,19 +9,22 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepository repository;
+    private String response;
     public ItemService(ItemRepository repo){
         this.repository = repo;
     }
 
-    public void saveItems(List<Item> itemList) {
+    public String saveItems(List<Item> itemList) {
         try {
             for (Item item : itemList) {
                 item.setAtivo(true);
                 repository.save(item);
             }
+            response = (itemList.size() == 1)  ? "Item salvo com sucesso" : "Itens salvos com sucesso";
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            response = e.getMessage();
         }
+        return response;
     }
 
     public void alterarItem(Item payload){
@@ -42,7 +45,7 @@ public class ItemService {
         }
     }
 
-    public void excluirItem(Item item) {
+    public String excluirItem(Item item) {
         try {
 
         }
