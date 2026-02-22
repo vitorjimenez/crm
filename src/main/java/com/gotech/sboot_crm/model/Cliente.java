@@ -23,4 +23,10 @@ public class Cliente implements Serializable {
     private boolean ativo;
     @CreationTimestamp
     private Date createdDate;
+
+    public boolean isValid(Cliente cliente){
+        return cliente.getNome() != null && !cliente.getNome().isEmpty()
+                && cliente.getEmail() != null && !cliente.getEmail().isEmpty()
+                && cliente.getTelefone() != null && !cliente.getTelefone().isEmpty();
+    }
 }

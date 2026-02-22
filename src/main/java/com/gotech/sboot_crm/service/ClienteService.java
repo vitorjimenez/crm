@@ -2,25 +2,21 @@ package com.gotech.sboot_crm.service;
 
 import com.gotech.sboot_crm.model.Cliente;
 import com.gotech.sboot_crm.repository.ClienteRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.sql.SQLOutput;
 import java.util.Optional;
 
 @Service
 public class ClienteService {
 
     private final ClienteRepository repository;
+    private String response;
 
     public ClienteService(ClienteRepository clienteRepository) {
         this.repository = clienteRepository;
     }
 
     public String encontrarCliente(Long id) {
-        String response;
         if(id == null || id.toString().equals("")) {return "O ID não pode ser nulo.";}
         try {
             Optional<Cliente> cliente = repository.findById(id);
@@ -37,7 +33,7 @@ public class ClienteService {
     }
 
     public String cadastrarCliente(Cliente cliente) {
-        String response = "";
+        if(!cliente.isValid(cliente)) return response = "Formulario invalido";
         try {
             response = "Sucesso ao cadastrar o cliente: " + cliente.getNome();
             repository.save(cliente);
@@ -48,7 +44,7 @@ public class ClienteService {
     }
 
     public String alterarCliente(Cliente cliente){
-        String response = "";
+        if(!cliente.isValid(cliente)) return response = "Formulario invalido.";
         try {
             response = "Sucesso ao alterar cliente: " + cliente.getNome();
             repository.save(cliente);
@@ -59,7 +55,7 @@ public class ClienteService {
     }
 
     public String desativarCliente(Cliente payload) {
-        if (payload == null) {return "Falha ao desativar cliente";}
+        if (!payload.isValid(payload)) {return response = "Falha ao desativar cliente";}
         String response = "";
         Cliente cliente = repository.findById(payload);
         try {

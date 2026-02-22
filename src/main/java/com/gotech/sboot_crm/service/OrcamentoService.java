@@ -1,7 +1,9 @@
 package com.gotech.sboot_crm.service;
 
 import com.gotech.sboot_crm.model.Item;
+import com.gotech.sboot_crm.model.ItemOrcamento;
 import com.gotech.sboot_crm.model.Orcamento;
+import com.gotech.sboot_crm.repository.ItemOrcamentoRepository;
 import com.gotech.sboot_crm.repository.ItemRepository;
 import com.gotech.sboot_crm.repository.OrcamentoRepository;
 import com.gotech.sboot_crm.service.type.DocType;
@@ -18,14 +20,18 @@ public class OrcamentoService {
 
     private final OrcamentoRepository orcamentoRepository;
     private final ItemRepository itemRepository;
+    private final ItemOrcamentoRepository itemOrcamentoRepository;
 
-    public OrcamentoService (OrcamentoRepository orcamentoRepository, ItemRepository itemRepository) {
+    public OrcamentoService (OrcamentoRepository orcamentoRepository, ItemRepository itemRepository, ItemOrcamentoRepository itemOrcamentoRepository) {
         this.orcamentoRepository = orcamentoRepository;
         this.itemRepository = itemRepository;
+        this.itemOrcamentoRepository = itemOrcamentoRepository;
     }
 
     public void saveOrcamento (Orcamento orcamento) {
         try {
+            ItemOrcamento itemOrcamento = new ItemOrcamento();
+            itemOrcamento.setOrcamento(orcamento);
             orcamento.setStatusOrcamento(Status.EM_CRIACAO);
             orcamento.setNomeOrcamento(criarNomeOrcamento(orcamento));
             orcamento.setCriadoPor(orcamento.getCriadoPor());
@@ -37,6 +43,9 @@ public class OrcamentoService {
 
     public void criarOrcamento(Orcamento payload){
         try {
+            ItemOrcamento itemOrcamento = new ItemOrcamento();
+            itemOrcamento.setItemList(payload.getItens());
+            itemOrcamento.setOrcamento(payload);
             Orcamento orcamento = orcamentoRepository.findById(payload);
             List<Item> itemList = new ArrayList<>();
             payload.getItens().forEach( i -> {
@@ -52,6 +61,7 @@ public class OrcamentoService {
             orcamento.setPreco(soma);
             orcamento.setCreatedDate(Date.from(Instant.now()));
             orcamentoRepository.save(orcamento);
+            itemOrcamentoRepository.save(itemOrcamento);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

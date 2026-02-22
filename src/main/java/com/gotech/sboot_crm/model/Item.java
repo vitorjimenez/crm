@@ -21,4 +21,9 @@ public class Item implements Serializable {
     private boolean ativo;
     private int quantidade;
 
+    public boolean isValid(Item item){
+        return item.getPreco() != 0
+                && item.getName() != null && !item.getName().isEmpty()
+                && item.getQuantidade() != 0;
+    }
 }
