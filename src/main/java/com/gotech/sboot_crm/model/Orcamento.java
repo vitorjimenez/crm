@@ -19,9 +19,19 @@ public class Orcamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nomeOrcamento;
+    @OneToOne
     private Usuario criadoPor;
-    private List<Item> itens;
+    @OneToOne
+    private ItemOrcamento itemOrcamento;
     private Status statusOrcamento;
     private Double preco;
     private Date createdDate;
+
+    public boolean isValid(Orcamento orcamento) {
+        return orcamento.getNomeOrcamento() != null && !orcamento.getNomeOrcamento().isEmpty()
+                || orcamento.getCriadoPor() != null
+                || orcamento.getItemOrcamento() != null
+                || orcamento.getPreco() != null && orcamento.getPreco() > 0
+                || orcamento.getStatusOrcamento() != null;
+    }
 }

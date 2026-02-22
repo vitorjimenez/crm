@@ -23,4 +23,9 @@ public class ItemOrcamento implements Serializable {
     @CreationTimestamp
     @Column(name = "data_criacao")
     private Date createdDate;
+
+    public boolean isValid(ItemOrcamento itemOrcamento){
+        return itemOrcamento.getOrcamento() != null
+                || itemOrcamento.getItemList() != null;
+    }
 }

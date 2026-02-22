@@ -25,8 +25,8 @@ public class Cliente implements Serializable {
     private Date createdDate;
 
     public boolean isValid(Cliente cliente){
-        return cliente.getNome() != null && !cliente.getNome().isEmpty()
-                && cliente.getEmail() != null && !cliente.getEmail().isEmpty()
-                && cliente.getTelefone() != null && !cliente.getTelefone().isEmpty();
+        return cliente.getNome() == null || cliente.getNome().isEmpty()
+                || cliente.getEmail() == null || cliente.getEmail().isEmpty()
+                || cliente.getTelefone() == null || cliente.getTelefone().isEmpty();
     }
 }

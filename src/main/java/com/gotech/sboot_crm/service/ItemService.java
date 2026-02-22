@@ -14,6 +14,15 @@ public class ItemService {
         this.repository = repo;
     }
 
+    public String getItem(Long id) {
+        try {
+            response = repository.findById(id).toString();
+        } catch (Exception e) {
+            response = "Falha ao encontrar item: " + e.getMessage();
+        }
+        return response;
+    }
+
     public String saveItems(List<Item> itemList) {
         try {
             for (Item item : itemList) {

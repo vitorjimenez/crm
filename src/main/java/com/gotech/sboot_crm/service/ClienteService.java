@@ -33,7 +33,7 @@ public class ClienteService {
     }
 
     public String cadastrarCliente(Cliente cliente) {
-        if(!cliente.isValid(cliente)) return response = "Formulario invalido";
+        if(cliente.isValid(cliente)) return response = "Formulario invalido";
         try {
             response = "Sucesso ao cadastrar o cliente: " + cliente.getNome();
             repository.save(cliente);
@@ -44,7 +44,7 @@ public class ClienteService {
     }
 
     public String alterarCliente(Cliente cliente){
-        if(!cliente.isValid(cliente)) return response = "Formulario invalido.";
+        if(cliente.isValid(cliente)) return response = "Formulario invalido.";
         try {
             response = "Sucesso ao alterar cliente: " + cliente.getNome();
             repository.save(cliente);
@@ -55,7 +55,7 @@ public class ClienteService {
     }
 
     public String desativarCliente(Cliente payload) {
-        if (!payload.isValid(payload)) {return response = "Falha ao desativar cliente";}
+        if (payload.isValid(payload)) {return response = "Falha ao desativar cliente";}
         String response = "";
         Cliente cliente = repository.findById(payload);
         try {

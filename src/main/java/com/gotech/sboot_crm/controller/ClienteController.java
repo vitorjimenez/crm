@@ -2,14 +2,12 @@ package com.gotech.sboot_crm.controller;
 
 import com.gotech.sboot_crm.model.Cliente;
 import com.gotech.sboot_crm.service.ClienteService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/cliente")
 @Controller
-@Slf4j
 public class ClienteController {
 
     private final ClienteService service;

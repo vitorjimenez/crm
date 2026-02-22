@@ -10,4 +10,5 @@ import java.util.function.Consumer;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
     Item findById(Item itemOrcamento);
+    Item findByName(String name);
 }
